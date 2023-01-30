@@ -1,0 +1,25 @@
+{
+  "name": "content-get",
+  "version": "1.0.0",
+  "description": "获取文章内容",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ihuzb/content-get.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ihuzb/content-get/issues"
+  },
+  "homepage": "https://github.com/Ihuzb/content-get#readme",
+  "dependencies": {
+    "canvas": "^2.10.1",
+    "gm": "^1.25.0",
+    "images": "^3.2.4",
+    "resemblejs": "^4.1.0"
+  }
+}
