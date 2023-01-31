@@ -2,8 +2,9 @@
   "name": "content-get",
   "version": "1.0.0",
   "description": "获取文章内容",
-  "main": "index.js",
+  "main": "puppeteer_bin/index.js",
   "scripts": {
+    "bookFold": "pm2 start ./server_bin/index.js --env production --name bookFoldServer",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,9 +18,13 @@
   },
   "homepage": "https://github.com/Ihuzb/content-get#readme",
   "dependencies": {
-    "canvas": "^2.10.1",
-    "gm": "^1.25.0",
-    "images": "^3.2.4",
-    "resemblejs": "^4.1.0"
+    "@koa/cors": "^4.0.0",
+    "axios": "^1.2.6",
+    "generic-pool": "^3.9.0",
+    "koa": "^2.14.1",
+    "koa-body": "^5.0.0",
+    "koa-morgan": "^1.0.1",
+    "koa-router": "^12.0.0",
+    "puppeteer": "^19.6.2"
   }
 }
