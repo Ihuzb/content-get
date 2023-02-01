@@ -18,6 +18,7 @@ module.exports = async (page) => {
         responseType: 'arraybuffer', // 特别注意，需要加上此参数
     });
     const file_base64 = res.data.toString('base64');
+    console.log('验证码类型：', codetype);
     if (codetype == 9101) {
         const access_token = await accessToken();
         const p_info = await baiduCode(access_token, file_base64);

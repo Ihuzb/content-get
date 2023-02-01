@@ -68,6 +68,7 @@ module.exports = async (pool) => {
             // 点击登录按钮元素
             await submit_ele.click();
             // 获取拼图区块位置 耗时...
+            console.log('解析验证码...')
             let location = await p_code(page);
             if (location) {
                 let {codetype, loca} = location;
