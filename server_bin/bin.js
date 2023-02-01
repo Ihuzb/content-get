@@ -1,28 +1,10 @@
 const puppeteerBin = require("../puppeteer_bin/index");
 const koaServer = require("./index")
 const Async = require("async");
-const initPuppeteerPool = require('../config/puppeteer_pool');
-
 let repeatNum = 5;
 const retry = (retries, fn) => {
     fn().then(res => true).catch((err) => retries > 1 ? retry(retries - 1, fn) : false);
 };
-const pool = initPuppeteerPool({ // 全局只应该被初始化一次
-    puppeteerArgs: {
-        ignoreHTTPSErrors: true,
-        headless: true,
-        args: [
-            '-–disable-dev-shm-usage',
-            '-–disable-setuid-sandbox',
-            '-–no-first-run',
-            '--no-sandbox',
-            '-–no-zygote',
-            '-–single-process',
-            // `--proxy-server=${proxyUrl}`
-        ],
-        //pipe: true, // 不使用 websocket
-    }
-});
 Async.auto({
     koa: function (callback) {
         koaServer()
@@ -31,7 +13,7 @@ Async.auto({
     },
     puppeteer: function (callback) {
         console.log('开始启动爬虫服务...');
-        puppeteerBin(pool).then(res => {
+        puppeteerBin().then(res => {
             console.log('爬虫服务启动成功！！');
             callback(null, res);
         }).catch(err => {
