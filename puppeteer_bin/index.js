@@ -17,6 +17,5 @@ const pool = initPuppeteerPool({ // 全局只应该被初始化一次
     }
 });
 module.exports = async () => {
-    console.log(1)
     return await login(pool);
 }
