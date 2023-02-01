@@ -1,11 +1,9 @@
 const initPuppeteerPool = require('../config/puppeteer_pool');
 const login = require('../server/login')
-const {urlList} = require("../config/config");
-const {delay} = require("../public/method");
 const pool = initPuppeteerPool({ // 全局只应该被初始化一次
     puppeteerArgs: {
         ignoreHTTPSErrors: true,
-        headless: false,
+        headless: true,
         args: [
             '-–disable-dev-shm-usage',
             '-–disable-setuid-sandbox',
@@ -19,5 +17,5 @@ const pool = initPuppeteerPool({ // 全局只应该被初始化一次
     }
 });
 module.exports = async () => {
-    await login(pool);
+    return await login(pool);
 }

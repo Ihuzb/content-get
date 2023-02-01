@@ -15,6 +15,7 @@ app.use(KoaBody({
 }))
 app.use(cors())
 require('./server');
+// 登录鉴权
 if (ENV !== "production") {
     // 开发环境
     app.use(morgan("dev"));
@@ -30,7 +31,9 @@ if (ENV !== "production") {
         })
     );
 }
+module.exports = () => {
+    app.use(global.router.routes());
+    app.listen(3002);
+    Promise.resolve();
+}
 
-app.use(global.router.routes());
-app.listen(3002);
-puppeteerBin();
