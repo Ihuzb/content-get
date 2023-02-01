@@ -50,14 +50,23 @@
         if (url) {
             axios({
                 method: 'post',
-                url: 'http://101.43.103.117:3002/selectContentInfo',
+                url: 'http://127.0.0.1:3002/selectContentInfo',
                 data: {
                     url
                 }
             }).then(res => {
                 let data = res.data.data;
-                data = data.replace(/height: auto; width: auto;/g, "width: 100%;")
-                $('#content').html(data);
+                let htmlText = $(data);
+                htmlText.each(function () {
+                    let v = $(this)[0];
+                    if (v.className == "central" && v.localName == "figure") {
+                        let img = $(v.childNodes[0]), text = $(v.childNodes[1])
+                        img.attr('src', img.attr('data-src'))
+                        img.attr('style', "width: 100%;")
+                        text.css('display', 'none')
+                    }
+                });
+                $('#content').html(htmlText);
             });
         }
     });

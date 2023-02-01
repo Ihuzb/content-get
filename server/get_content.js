@@ -16,7 +16,7 @@ module.exports = async (url) => {
     if (!status.ok) {
         throw new Error('cannot open google.com')
     }
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(1000);
     // await page.waitForSelector(".Image-module-image-uorig");
     // const appHeader = await page.$(".Image-module-image-uorig");
     let text = '', login = await page.$('.Modal-inner');
@@ -38,7 +38,7 @@ module.exports = async (url) => {
                     }, 200);
                 })
             }
-            await window.scrollNum();
+            // await window.scrollNum();
             let type = await filterUrl(url);
             if (type == 1) {
                 console.log('专栏内容！！');
@@ -52,6 +52,7 @@ module.exports = async (url) => {
     } else if (login) {
 
     }
+    console.log('请求完成！！');
     page.close();
     return text;
 }
