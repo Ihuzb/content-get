@@ -33,6 +33,7 @@ module.exports = async (pool) => {
         let page = global.page;
         if (page) await page.close();
         await pool.use(async (browser) => {
+            console.log(2)
             const page = await browser.newPage();
             await page.setExtraHTTPHeaders({
                 'Accept-Encoding': 'gzip'
