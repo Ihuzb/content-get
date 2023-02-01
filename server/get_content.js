@@ -1,4 +1,5 @@
 const {filterUrl} = require("../public/method")
+const puppeteerBin = require("../puppeteer_bin");
 
 module.exports = async (url) => {
     let browser = global.browser;
@@ -15,11 +16,11 @@ module.exports = async (url) => {
     if (!status.ok) {
         throw new Error('cannot open google.com')
     }
-    // await page.waitForTimeout(3000);
+    await page.waitForTimeout(3000);
     // await page.waitForSelector(".Image-module-image-uorig");
     // const appHeader = await page.$(".Image-module-image-uorig");
-    let text = ''
-    if (true) {
+    let text = '', login = await page.$('.Modal-inner');
+    if (true && !login) {
         console.log('会员状态正常！！');
         await page.exposeFunction("filterUrl", filterUrl);
         text = await page.evaluate(async (url) => {
@@ -47,6 +48,9 @@ module.exports = async (url) => {
                 return `<h1>${document.querySelector(".Post-Title").innerHTML}</h1>` + '<br/>' + document.querySelector(".RichText.ztext.Post-RichText").innerHTML;
             }
         }, url);
+
+    } else if (login) {
+
     }
     page.close();
     return text;
