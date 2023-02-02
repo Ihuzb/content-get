@@ -24,7 +24,7 @@ const initPuppeteerPool = (options = {}) => {
         maxUses = 2048,
         testOnBorrow = true,
         autostart = false,
-        idleTimeoutMillis = 3600000,
+        idleTimeoutMillis = 3600000 * 24 * 365,
         evictionRunIntervalMillis = 180000,
         puppeteerArgs = {},
         validator = () => Promise.resolve(true),

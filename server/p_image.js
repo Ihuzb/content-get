@@ -1,7 +1,7 @@
 const {myPost} = require("../api/api");
 module.exports = {
     baiduCode: async (access_token, image) => {
-        let res = await myPost(`https://aip.baidubce.com/rpc/2.0/ai_custom/v1/detection/pCode?access_token=${access_token}`, {
+        let res = await myPost(`https://aip.baidubce.com/rpc/2.0/ai_custom/v1/detection/pCodeInfo?access_token=${access_token}`, {
             image
         })
         return res.data

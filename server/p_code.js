@@ -1,7 +1,4 @@
 const {myGet} = require("../api/api");
-const path = require('path');
-const fs = require('fs');
-const axios = require('axios');
 const accessToken = require("./access_token");
 const {baiduCode, yingCode} = require("./p_image");
 const {filterCode} = require("../public/method")

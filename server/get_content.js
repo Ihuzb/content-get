@@ -1,9 +1,11 @@
 const {filterUrl} = require("../public/method")
-const puppeteerBin = require("../puppeteer_bin");
 
 module.exports = async (url) => {
     let browser = global.browser;
-    if (!browser) return null;
+    if (!browser) {
+        console.log('浏览器框架失效！！');
+        return null;
+    }
     console.log(url, 'url')
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({
@@ -50,7 +52,7 @@ module.exports = async (url) => {
         }, url);
 
     } else if (login) {
-
+        console.log("会员状态失败！！")
     }
     console.log('请求完成！！');
     page.close();

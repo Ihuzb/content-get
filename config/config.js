@@ -9,8 +9,8 @@ module.exports = {
     },
     // 百度鉴权信息
     baiduClient:{
-        client_id: 'ofR2bOKv8vHTyp6qv53C8kHE',
-        client_secret: 'NuMt5rYLZmanI9z69k5HndTPbQ7UPIKY'
+        client_id: 'TlQAOcnXFkWgTXcc4AdVBOF7',
+        client_secret: 'NGfwx0yCHDB9201oGvBoTgccfvReU0IZ'
     },
     // 知乎用户信息
     userInfo: {
