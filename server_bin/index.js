@@ -10,10 +10,9 @@ app.use(KoaBody({
 }))
 app.use(cors())
 require('./server');
-// 登录鉴权
-
-module.exports = () => {
-    app.use(global.router.routes());
-    app.listen(3002);
+require('../public/sqlOption');
+module.exports = async () => {
+    await app.use(global.router.routes());
+    await app.listen(3002);
 }
 
