@@ -1,11 +1,10 @@
-module.exports = async (sql, data = '') => {
+const mysql = require('../public/sqlOption');
+module.exports = (sql, data = '') => {
     return new Promise((re, rj) => {
-        global.sql.query(sql, data, (error, result) => {
-            if (!error) {
-                re(result)
-            } else {
-                rj(error)
-            }
+        mysql.selectInfo(sql, data).then(res => {
+            re(res)
+        }).catch(err => {
+            rj(res)
         });
     })
 }

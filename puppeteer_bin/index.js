@@ -3,7 +3,7 @@ const login = require('../server/login')
 const pool = initPuppeteerPool({ // 全局只应该被初始化一次
     puppeteerArgs: {
         ignoreHTTPSErrors: true,
-        headless: true,
+        headless: false,
         args: [
             '-–disable-dev-shm-usage',
             '-–disable-setuid-sandbox',

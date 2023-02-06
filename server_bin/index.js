@@ -10,7 +10,6 @@ app.use(KoaBody({
 }))
 app.use(cors())
 require('./server');
-require('../public/sqlOption');
 module.exports = async () => {
     await app.use(global.router.routes());
     await app.listen(3002);
