@@ -4,7 +4,13 @@ const koaServer = require("./index")
 const Async = require("async");
 let repeatNum = 5;
 const retry = (retries, fn) => {
-    fn().then(res => true).catch((err) => retries > 1 ? retry(retries - 1, fn) : false);
+    return new Promise((re, rj) => {
+        fn().then(res => {
+            re(true)
+        }).catch(async (err) => {
+            rj(retries > 1 ? await retry(retries - 1, fn) : false)
+        });
+    })
 };
 Async.auto({
     setEndTime: async () => {
@@ -28,16 +34,19 @@ Async.auto({
             callback(null, err);
         })
     },
-    repeat: ['puppeteer', function (results, callback) {
-        callback(null, results.puppeteer == 1);
-        // if (!results.puppeteer) {
-        //     console.log(`${results.puppeteer == 0 ? '登录' : '识别'}失败`);
-        //     console.log('开始重试启动爬虫服务...');
-        //     let type = retry(repeatNum, puppeteerBin);
-        //     callback(null, type);
-        // } else {
-        //     callback(null, true);
-        // }
+    repeat: ['puppeteer', async (results) => {
+        // callback(null, results.puppeteer == 1);
+        if (results.puppeteer != 1) {
+            console.log(`${results.puppeteer == 0 ? '登录' : '识别'}失败`);
+            console.log('开始重试启动爬虫服务...');
+            await retry(repeatNum, puppeteerBin).then(res => {
+                return res
+            }).catch(err => {
+                return false;
+            })
+        } else {
+            return true;
+        }
     }]
 }, function (err, results) {
     if (results.repeat) {

@@ -83,11 +83,11 @@ router.post('/selectContentInfo', async (ctx) => {
         let codeInfo = await sqlQuery(selectCodeInfo, [code]);
         if (codeInfo.length) {
             let {type, orgin} = codeInfo[0];
-            if (type == 2) {
+            if (type == 2 && orgin == 1 || ((type == 2 || type == 3) && orgin == 2)) {
                 let data = await getContent(url);
                 if (orgin == 1) {// 次卡
                     await sqlQuery(setUseCodeType, [3, code]);
-                } else if (orgin == 2) {// 月卡
+                } else if (orgin == 2 && type == 2) {// 月卡
                     await sqlQuery(setUseCodeType, [3, code]);
                 }
                 ctx.body = {
@@ -97,7 +97,7 @@ router.post('/selectContentInfo', async (ctx) => {
             } else {
                 ctx.body = {
                     state: 200,
-                    data: type
+                    data: 3
                 }
             }
         } else {
