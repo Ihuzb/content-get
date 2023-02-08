@@ -1,8 +1,37 @@
 const router = global.router;
 const getContent = require("../server/get_content")
 const sqlQuery = require("../public/sqlQueryBook");
-const {cerateCode, selectCode, setCodeType, selectCodeInfo} = require("../sql/sqlList");
+const {cerateCode, selectCode, setCodeType, selectCodeInfo, setEndTime} = require("../sql/sqlList");
 const {createCodeNum} = require("../public/method");
+const Async = require('async');
+// 批量修改卡号状态
+router.post('/setCodeTypeAll', async (ctx) => {
+    let {code} = ctx.request.body;
+    ctx.set("Content-Type", "application/json")
+    ctx.type = 'json'
+    if (code.length) {
+        await (() => {
+            return new Promise((re, rj) => {
+                Async.mapLimit(code, 5, async (item) => {
+                    let codeInfo = await sqlQuery(setCodeType, [2, item]);
+                    return true;
+                }, (err, con) => {
+                    re();
+                })
+            })
+        })();
+        ctx.body = {
+            state: 200,
+            data: 'ok'
+        }
+    } else {
+        ctx.body = {
+            state: 200,
+            data: null
+        }
+    }
+});
+
 // 生成文档链接/修改卡号状态
 router.get('/setCodeType', async (ctx) => {
     let {type = 2, id} = ctx.query;
@@ -56,8 +85,10 @@ router.post('/selectContentInfo', async (ctx) => {
             let {type, orgin} = codeInfo[0];
             if (type == 2) {
                 let data = await getContent(url);
-                if (orgin == 1) {
+                if (orgin == 1) {// 次卡
                     await sqlQuery(setCodeType, [3, code]);
+                } else if (orgin == 2) {// 月卡
+                    await sqlQuery(setCodeType, [2, code]);
                 }
                 ctx.body = {
                     state: 200,

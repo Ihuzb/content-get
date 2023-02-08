@@ -6,7 +6,10 @@ let onelib ={
     port: 3306,
     database: 'book_code',
     charset:'Utf8mb4',
-    timezone:"SYSTEM"
+    timezone:"SYSTEM",
+    useConnectionPooling: true,
+    connectionLimit: 20,
+    multipleStatements: true
 }
 let onelib_pool = mysql.createPool(onelib);
 class connectMysql {
@@ -67,7 +70,7 @@ class connectMysql {
                     console.log('ping error:' + err)
                 }
             })
-        }).bind(this), 3600000 * 4)
+        }).bind(this), 27800)
     }
 }
 module.exports = connectMysql.getInstance();

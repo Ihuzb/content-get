@@ -1,4 +1,5 @@
 const puppeteerBin = require("../puppeteer_bin/index");
+const setEndTime = require("../server/setEndTime");
 const koaServer = require("./index")
 const Async = require("async");
 let repeatNum = 5;
@@ -6,6 +7,11 @@ const retry = (retries, fn) => {
     fn().then(res => true).catch((err) => retries > 1 ? retry(retries - 1, fn) : false);
 };
 Async.auto({
+    setEndTime: async () => {
+        await setEndTime();
+        console.log('开始月卡定时任务！！');
+        return true
+    },
     koa: async () => {
         await koaServer();
         console.log('数据库,接口服务启动成功！！');

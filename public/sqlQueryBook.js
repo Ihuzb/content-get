@@ -4,7 +4,7 @@ module.exports = (sql, data = '') => {
         mysql.selectInfo(sql, data).then(res => {
             re(res)
         }).catch(err => {
-            rj(res)
+            rj(err)
         });
     })
 }

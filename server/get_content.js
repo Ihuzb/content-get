@@ -26,21 +26,6 @@ module.exports = async (url) => {
         console.log('会员状态正常！！');
         await page.exposeFunction("filterUrl", filterUrl);
         text = await page.evaluate(async (url) => {
-            window.scrollNum = () => {
-                return new Promise((re, rj) => {
-                    let totalHeight = 0, distance = 300;
-                    let time = setInterval(() => {
-                        let scrollHeight = document.body.scrollHeight;
-                        window.scrollBy(0, distance);
-                        totalHeight += distance;
-                        if (totalHeight >= scrollHeight) {
-                            clearInterval(time);
-                            re();
-                        }
-                    }, 200);
-                })
-            }
-            // await window.scrollNum();
             let type = await filterUrl(url);
             if (type == 1) {
                 console.log('专栏内容！！');
@@ -52,7 +37,7 @@ module.exports = async (url) => {
         }, url);
 
     } else if (login) {
-        console.log("会员状态失败！！")
+        console.log("会员状态失败！！");
     }
     console.log('请求完成！！');
     page.close();
