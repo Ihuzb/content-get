@@ -13,7 +13,7 @@ module.exports = async () => {
         data = data.filter(v => {
             let time = dayjs(new Date()).diff(v.use_time, 'day')
             return time >= 30;
-        }).map(v => [3, v.id]);
+        }).map(v => [4, v.id]);
         if (data.length) {
             data.forEach(async v => {
                 await sqlQuery(setEndTime, v);
