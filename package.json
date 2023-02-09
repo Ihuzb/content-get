@@ -4,7 +4,7 @@
   "description": "获取文章内容",
   "main": "puppeteer_bin/index.js",
   "scripts": {
-    "server": "pm2 start ./server_bin/bin.js --env production --name content_get --restart-delay 1800000",
+    "server": "pm2 start ./server_bin/bin.js --env production --name content_get --restart-delay 432000000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
