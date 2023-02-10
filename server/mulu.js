@@ -15,7 +15,7 @@ const clickAdd = (page) => {
 }
 module.exports = async (page) => {
     return new Promise(async (re, rj) => {
-        await clickAdd(page);
+        // await clickAdd(page);
         console.log('目录内容！！');
         let title = await page.$$eval("div[class*='HeaderInfo-title-'] span", async e => {
             let child = e.slice(-1)[0].innerText
