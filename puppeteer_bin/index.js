@@ -11,6 +11,7 @@ const pool = initPuppeteerPool({ // 全局只应该被初始化一次
             '--no-sandbox',
             '-–no-zygote',
             '-–single-process',
+            '--disable-web-security'
             // `--proxy-server=${proxyUrl}`
         ],
         //pipe: true, // 不使用 websocket

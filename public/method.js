@@ -4,10 +4,16 @@ module.exports = {
         // 专栏
         let zhuanLan = new RegExp(/\/section\//);
         let yanXuan = new RegExp(/\/p\//);
+        let mulu = new RegExp(/\/xen\/market\/remix\/paid_column/);
+        let wenti = new RegExp(/\/answer\//);
         if (zhuanLan.test(url)) {
             return 1
         } else if (yanXuan.test(url)) {
             return 2
+        } else if (mulu.test(url)) {
+            return 3
+        } else if (wenti.test(url)) {
+            return 4
         } else {
             return null
         }

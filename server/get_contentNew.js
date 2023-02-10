@@ -12,11 +12,6 @@ module.exports = async (url) => {
         await page.setExtraHTTPHeaders({
             'Accept-Encoding': 'gzip'
         });
-        await page.evaluateOnNewDocument(() => {
-            Object.defineProperty(navigator, 'webdriver', {
-                get: () => undefined
-            })
-        });
         const status = await page.goto(url, {
             waitUntil: ['load', 'domcontentloaded', 'networkidle0'],
             'timeout': 1000 * 100 //这里超时是60s
@@ -42,9 +37,6 @@ module.exports = async (url) => {
                     } else if (type == 2) {
                         console.log('盐选专栏内容！！');
                         return `<h1>${document.querySelector(".Post-Title").innerHTML}</h1>` + '<br/>' + document.querySelector(".RichText.ztext.Post-RichText").innerHTML;
-                    } else if (type == 4) {
-                        console.log('问题内容！！');
-                        return document.querySelector('.RichText.ztext.CopyrightRichText-richText').innerHTML;
                     }
                 }, type);
             }

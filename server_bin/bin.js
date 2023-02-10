@@ -27,14 +27,14 @@ Async.auto({
         console.log('开始启动爬虫服务...');
         // callback(null, 1);
         puppeteerBin().then(res => {
-            console.log('爬虫服务启动成功！！');
+            console.log(`爬虫服务启动成功！！`);
             callback(null, res);
         }).catch(err => {
             console.log('爬虫服务启动失败！！');
             callback(null, err);
         })
     },
-    repeat: ['puppeteer', async (results) => {
+    repeats: ['puppeteer', async (results) => {
         // callback(null, results.puppeteer == 1);
         if (results.puppeteer != 1) {
             console.log(`${results.puppeteer == 0 ? '登录' : '识别'}失败`);
@@ -49,7 +49,7 @@ Async.auto({
         }
     }]
 }, function (err, results) {
-    if (results.repeat) {
+    if (results.repeats) {
         console.log('登录成功！！')
     } else {
         console.log('登录失败！！')
