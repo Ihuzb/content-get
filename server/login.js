@@ -45,12 +45,13 @@ module.exports = async (pool) => {
                 })
             });
             const status = await page.goto(urlList.main_url, {
+                waitUntil: ['load', 'domcontentloaded', 'networkidle0'],
                 'timeout': 1000 * 100 //这里超时是60s
             });
             if (!status.ok) {
                 throw new Error('cannot open google.com')
             }
-            // await page.waitForSelector(".SignFlow-tabs");
+            await page.waitForSelector(".SignFlow-tabs");
             // 获取密码登录元素
             let password_ele = await page.$('.SignFlow-tabs .SignFlow-tab:nth-child(2)');
             // 点击密码登录元素
