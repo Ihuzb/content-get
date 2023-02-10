@@ -50,8 +50,7 @@ module.exports = async (pool) => {
             if (!status.ok) {
                 throw new Error('cannot open google.com')
             }
-            console.log(page, 'page');
-            await page.waitForSelector(".SignFlow-tabs");
+            // await page.waitForSelector(".SignFlow-tabs");
             // 获取密码登录元素
             let password_ele = await page.$('.SignFlow-tabs .SignFlow-tab:nth-child(2)');
             // 点击密码登录元素
