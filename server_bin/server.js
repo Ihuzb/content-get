@@ -1,7 +1,7 @@
 const router = global.router;
 const getContent = require("../server/get_content")
 const sqlQuery = require("../public/sqlQueryBook");
-const {cerateCode, selectCode, setCodeType, selectCodeInfo, setUseCodeType} = require("../sql/sqlList");
+const {cerateCode, selectCode, setCodeType, selectCodeInfo, setUseCodeType, setUseYueCodeType} = require("../sql/sqlList");
 const {createCodeNum} = require("../public/method");
 const Async = require('async');
 // 批量修改卡号状态
@@ -88,7 +88,7 @@ router.post('/selectContentInfo', async (ctx) => {
                 if (orgin == 1) {// 次卡
                     await sqlQuery(setUseCodeType, [3, code]);
                 } else if (orgin == 2 && type == 2) {// 月卡
-                    await sqlQuery(setUseCodeType, [3, code]);
+                    await sqlQuery(setUseYueCodeType, [3, code]);
                 }
                 ctx.body = {
                     state: 200,
