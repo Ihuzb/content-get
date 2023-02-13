@@ -1,8 +1,15 @@
 const router = global.router;
 const getContent = require("../server/get_content")
 const sqlQuery = require("../public/sqlQueryBook");
-const {cerateCode, selectCode, setCodeType, selectCodeInfo, setUseCodeType, setUseYueCodeType} = require("../sql/sqlList");
-const {createCodeNum} = require("../public/method");
+const {
+    cerateCode,
+    selectCode,
+    setCodeType,
+    selectCodeInfo,
+    setUseCodeType,
+    setUseYueCodeType
+} = require("../sql/sqlList");
+const {createCodeNum, filterUrl} = require("../public/method");
 const Async = require('async');
 // 批量修改卡号状态
 router.post('/setCodeTypeAll', async (ctx) => {
@@ -84,15 +91,23 @@ router.post('/selectContentInfo', async (ctx) => {
         if (codeInfo.length) {
             let {type, orgin} = codeInfo[0];
             if (type == 2 && orgin == 1 || ((type == 2 || type == 3) && orgin == 2)) {
-                let data = await getContent(url);
-                if (orgin == 1) {// 次卡
-                    await sqlQuery(setUseCodeType, [3, code]);
-                } else if (orgin == 2 && type == 2) {// 月卡
-                    await sqlQuery(setUseYueCodeType, [3, code]);
-                }
-                ctx.body = {
-                    state: 200,
-                    data: data
+                let urlType = filterUrl(url);
+                if (urlType) {
+                    let data = await getContent(url);
+                    if (orgin == 1) {// 次卡
+                        await sqlQuery(setUseCodeType, [3, code]);
+                    } else if (orgin == 2 && type == 2) {// 月卡
+                        await sqlQuery(setUseYueCodeType, [3, code]);
+                    }
+                    ctx.body = {
+                        state: 200,
+                        data: data
+                    }
+                } else {
+                    ctx.body = {
+                        state: 200,
+                        data: null
+                    }
                 }
             } else {
                 ctx.body = {

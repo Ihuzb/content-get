@@ -5,9 +5,15 @@ const clickAdd = (page) => {
         let addInfo = await page.$("div[class*='CatalogModule-allSection-']");
         if (addInfo) {
             await addInfo.click();
-            await page.waitForTimeout(1000);
-            await clickAdd(page)
-            re()
+            try {
+                await page.waitForResponse(response => {
+                    return response.url().includes('/catalog')
+                });
+                await clickAdd(page);
+                re();
+            } catch (e) {
+                re();
+            }
         } else {
             re()
         }
@@ -15,7 +21,7 @@ const clickAdd = (page) => {
 }
 module.exports = async (page) => {
     return new Promise(async (re, rj) => {
-        // await clickAdd(page);
+        await clickAdd(page);
         console.log('目录内容！！');
         let title = await page.$$eval("div[class*='HeaderInfo-title-'] span", async e => {
             let child = e.slice(-1)[0].innerText
@@ -29,10 +35,12 @@ module.exports = async (page) => {
             })
             return infoList
         });
+        console.log(`共获取${infoList.length}章，开始获取内容！！`)
         await async.mapLimit(infoList, 10, async (item) => {
             let info = await getContentNew(item);
             return info;
         }, (err, con) => {
+            console.log(`共获取${infoList.length}章，实际获取${con.filter(v => v).length}章！！`)
             let text = `<h1>《${title}》</h1><br/>${con.join('<br/>')}`
             re(text)
         })

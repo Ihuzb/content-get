@@ -19,27 +19,19 @@ module.exports = async (url) => {
         if (!status.ok) {
             throw new Error('cannot open google.com')
         }
-        await page.waitForTimeout(1000);
-        // await page.waitForSelector(".Image-module-image-uorig");
-        // const appHeader = await page.$(".Image-module-image-uorig");
         let text = '', login = await page.$('.Modal-inner');
         if (true && !login) {
             console.log('会员状态正常！！');
-            await page.exposeFunction("filterUrl", filterUrl);
             let type = filterUrl(url);
-            if (type == 3) {
-                text = await mulu(page, url);
-            } else {
-                text = await page.evaluate(async (type) => {
-                    if (type == 1) {
-                        console.log('专栏内容！！');
-                        return `<h1>${document.querySelector("#app h1").innerHTML}</h1>` + '<br/>' + document.querySelector("#manuscript").innerHTML;
-                    } else if (type == 2) {
-                        console.log('盐选专栏内容！！');
-                        return `<h1>${document.querySelector(".Post-Title").innerHTML}</h1>` + '<br/>' + document.querySelector(".RichText.ztext.Post-RichText").innerHTML;
-                    }
-                }, type);
-            }
+            text = await page.evaluate(async (type) => {
+                if (type == 1) {
+                    console.log('专栏内容！！');
+                    return `<h1>${document.querySelector("#app h1").innerHTML}</h1>` + '<br/>' + document.querySelector("#manuscript").innerHTML;
+                } else if (type == 2) {
+                    console.log('盐选专栏内容！！');
+                    return `<h1>${document.querySelector(".Post-Title").innerHTML}</h1>` + '<br/>' + document.querySelector(".RichText.ztext.Post-RichText").innerHTML;
+                }
+            }, type);
         } else if (login) {
             console.log("会员状态失败！！");
         }
